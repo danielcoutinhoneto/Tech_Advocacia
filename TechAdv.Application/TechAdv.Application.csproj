@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechAdv.Core\TechAdv.Core.csproj" />
+    <ProjectReference Include="..\TechAdv.Infrastructure\TechAdv.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
