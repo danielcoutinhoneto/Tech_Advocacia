@@ -8,15 +8,20 @@ public class TechAdvDbContext : DbContext
    public DbSet<Advogado> Advogados { get; set; }
    public DbSet<Cliente> Clientes { get; set; }
 
-   public TechAdvDbContext(DbContextOptions<TechAdvDbContext> options) : base(options)
-   {
-      //Database.EnsureCreated();
-   }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        var connectionString = "server=localhost;user=root;password=Tic123456;database=techadvocacia";
+        var serverVersion = ServerVersion.AutoDetect(connectionString);
+
+        optionsBuilder.UseMySql(connectionString, serverVersion);
+    }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       base.OnModelCreating(modelBuilder);
 
-      modelBuilder.ApplyConfigurationsFromAssembly(typeof(TechAdvDbContext).Assembly);
+       modelBuilder.Entity<Advogado>().ToTable("Advogado").HasKey(a => a.AdvogadoId);
+       modelBuilder.Entity<Cliente>().ToTable("Cliente").HasKey(c => c.ClienteId);
    }
 }
